@@ -1,0 +1,15 @@
+name: wiki
+
+services:
+  app:
+    image: node:24-alpine
+    container_name: wiki-app
+    working_dir: /app
+    entrypoint: ["/app/.ops/entrypoint.sh"]
+    volumes:
+      - .:/app
+    ports:
+      - "5173:5173"
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

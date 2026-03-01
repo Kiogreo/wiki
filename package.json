@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.4",
+    "vite": "^7.3.1",
+    "vitepress": "2.0.0-alpha.16"
+  },
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  }
+}

@@ -1,0 +1,8 @@
+.idea
+# nodejs specific files
+node_modules
+.pnpm-store
+
+# vitepress specific files
+.vitepress/cache
+.vitepress/dist

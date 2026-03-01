@@ -1,0 +1,88 @@
+name: Build and Deploy to GitHub Pages
+
+# Trigger workflow on any push to `main` branch
+on:
+  push:
+    branches:
+      - main
+
+# Needed for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          clean: true # Ensures clean checkout
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lock
+
+      - name: Build VitePress site
+        run: pnpm build
+
+      - name: Update Search Index filename from '@localSearchIndex' to 'localSearchIndex'
+        run: |
+          cd .vitepress/dist
+
+          # step 1: Create mapping for all '@localSearchIndex' files
+          declare -A fileMap
+          for file in $(find . -name "*@localSearchIndex*.js"); do
+            if [ -f "$file" ]; then
+              newfile=$(echo "$file" | sed 's/@localSearchIndex/localSearchIndex/g')
+              fileMap["$file"]="$newfile"
+            fi
+          done
+
+          # step 2: Update all references in ALL files from '@localSearchIndex' to 'localSearchIndex'
+          for original in "${!fileMap[@]}"; do
+            new="${fileMap[$original]}"
+            originalFilename=$(basename "$original")
+            updatedFilename=$(basename "$new")
+            
+            # Update references in all JS, HTML, and CSS files
+            find . \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -type f -exec sed -i "s|$originalFilename|$updatedFilename|g" {} \;
+            find . \( -name "*.js" -o -name "*.html" -o -name "*.css" \) -type f -exec sed -i "s|@localSearchIndex|localSearchIndex|g" {} \;
+          done
+
+          # step 3: Rename the actual index file ('@localSearchIndex*.js')
+          for original in "${!fileMap[@]}"; do
+            new="${fileMap[$original]}"
+            mv "$original" "$new"
+          done
+
+          # print output of renamed file
+          echo "=== Renamed files ==="
+          find . -name "*localSearchIndex*.js" -type f
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .vitepress/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
