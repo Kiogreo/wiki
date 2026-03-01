@@ -24,6 +24,7 @@ export default defineConfig({
   },
 
   // build config
+  base: "/wiki/", // base path for deployment
   srcDir: "./src", // source directory
   cleanUrls: true, // exclude file extention from route
 
