@@ -1,4 +1,4 @@
-![logo.png](logo.png)
+![logo.png](./src/public/logo.png)
 
 # Kiogreo Wiki
 

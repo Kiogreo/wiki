@@ -19,6 +19,9 @@ export default defineConfig({
       },
     ],
   ],
+  sitemap: {
+    hostname: "https://kiogreo.github.io/wiki",
+  },
 
   // build config
   srcDir: "./src", // source directory
