@@ -6,3 +6,5 @@ node_modules
 # vitepress specific files
 .vitepress/cache
 .vitepress/dist
+
+.env
