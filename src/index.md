@@ -20,6 +20,8 @@ hero:
 features:
   - title: Journal Therapist
     details: POC for my LLM agent that act as Therapist through daily journal
+    link: https://github.com/Kiogreo/journal-therapist
   - title: Docker Homelab
     details: Private config for my homelab
+    link: https://github.com/Kiogreo/docker-homelab
 ---
