@@ -5,7 +5,7 @@ import vueConfig from "./vue.config.mts";
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  // site metadata config
+  // metadata config
   title: "Kiogreo Wiki",
   description: "Wiki for Kiogreo Ecosystem",
   ignoreDeadLinks: true,
@@ -22,6 +22,7 @@ export default defineConfig({
   sitemap: {
     hostname: "https://kiogreo.github.io/wiki",
   },
+  themeConfig: themeConfig,
 
   // build config
   base: "/wiki/", // base path for deployment
@@ -32,5 +33,4 @@ export default defineConfig({
   vue: vueConfig,
   vite: viteConfig,
   markdown: markdownConfig,
-  themeConfig: themeConfig,
 });

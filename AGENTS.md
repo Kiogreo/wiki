@@ -8,9 +8,9 @@ This document provides essential context for AI coding agents operating in this 
 
 ```bash
 # Development
-npm run dev          # Start VitePress dev server (hot reload)
-npm run build        # Build documentation site for production
-npm run preview      # Preview built site locally
+pnpm dev          # Start VitePress dev server (hot reload)
+pnpm build        # Build documentation site for production
+pnpm preview      # Preview built site locally
 ```
 
 **Note**: No test framework or lint commands currently installed.
